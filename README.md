@@ -1,5 +1,5 @@
 ## youa.dev
-### User Service
+### Blog Service
 
 ---
 
@@ -9,7 +9,7 @@
 
 ### About:
 
-This service handles user account and profile creation, editing, authorization, authentication and everything related.
+This service handles all blogging tasks for the network.
 
 ---
 
