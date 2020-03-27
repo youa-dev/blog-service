@@ -13,7 +13,7 @@ export default async (
 ) => {
   axios.defaults.headers.common.Authorization = token;
   const res = await axios[method](
-    `http://localhost:${server.port}${endpoint}`,
+    `http://localhost:${server.port}/api${endpoint}`,
     data
   );
   return {
