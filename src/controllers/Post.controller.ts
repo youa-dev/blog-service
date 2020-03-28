@@ -1,6 +1,28 @@
 import { IRequest } from "../interfaces";
 import { Response } from "express";
+import Post from "../db/models/Post.model";
+
+const randomHandleNumber = () =>
+  `${Math.floor(Math.random() * 10)}${Math.floor(
+    Math.random() * 10
+  )}${Math.floor(Math.random() * 10)}`;
+
+const generateHandle = (title: string) =>
+  `${title
+    .toLowerCase()
+    .split(" ")
+    .join("-")}-${randomHandleNumber()}`;
 
 class PostController {
-  public async createPost(req: IRequest, res: Response);
+  public async createPost(req: IRequest, res: Response) {
+    const newPost = await Post.create({
+      author: req.user.id,
+      title: req.body.title,
+      handle: generateHandle(req.body.title),
+      body: req.body.body
+    });
+    return res.status(200).json(newPost);
+  }
 }
+
+export default new PostController();

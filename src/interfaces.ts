@@ -1,20 +1,6 @@
 import { Request } from "express";
 import { Document } from "mongoose";
 
-export interface ILoginValidationError {
-  emailEmpty?: String;
-  emailNotValid?: String;
-  passwordEmpty?: String;
-}
-
-export interface IRegistrationValidationError extends ILoginValidationError {
-  firstNameEmpty?: String;
-  lastNameEmpty?: String;
-  confirmPasswordEmpty?: String;
-  passwordLength?: String;
-  passwordsNotMatching?: String;
-}
-
 export interface IUser extends Document {
   id: string;
   email: string;
@@ -42,6 +28,11 @@ export interface IPost extends Document {
   likes: string[];
   comments: IComment[];
   createdAt: Date;
+}
+
+export interface IPostValidationErrors {
+  titleEmpty?: string;
+  bodyEmpty?: string;
 }
 
 export interface IConnectionArguments {

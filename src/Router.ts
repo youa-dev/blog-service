@@ -1,13 +1,25 @@
 import express from "express";
+import validateInput from "./middleware/validateInput";
+import controller from "./controllers/Post.controller";
+import { IRequest } from "./interfaces";
 
 class Router {
-  public API_ROUTER = express.Router();
+  public ROUTER = express.Router();
   constructor() {
-    this.setAPIEndpoints();
+    this.setEndpoints();
   }
-  private setAPIEndpoints(): void {}
+  private setEndpoints(): void {
+    this.ROUTER.post(
+      "/create",
+      validateInput,
+      (req: IRequest, res: express.Response) => controller.createPost
+    );
+    this.ROUTER.put(
+      "/edit",
+      validateInput,
+      (req: IRequest, res: express.Response) => controller.editPost
+    );
+  }
 }
 
-const { API_ROUTER } = new Router();
-
-export { API_ROUTER };
+export default new Router().ROUTER;
