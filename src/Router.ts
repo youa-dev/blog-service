@@ -1,5 +1,6 @@
 import express from "express";
 import validateInput from "./middleware/validateInput";
+import authUser from "./middleware/authUser";
 import controller from "./controllers/Post.controller";
 import { IRequest } from "./interfaces";
 
@@ -11,14 +12,15 @@ class Router {
   private setEndpoints(): void {
     this.ROUTER.post(
       "/create",
+      authUser,
       validateInput,
       (req: IRequest, res: express.Response) => controller.createPost
     );
-    this.ROUTER.put(
-      "/edit",
-      validateInput,
-      (req: IRequest, res: express.Response) => controller.editPost
-    );
+    // this.ROUTER.put(
+    //   "/edit",
+    //   validateInput,
+    //   (req: IRequest, res: express.Response) => controller.editPost
+    // );
   }
 }
 

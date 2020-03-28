@@ -1,6 +1,6 @@
 import { Application } from "express";
-import { API_ROUTER } from "../Router";
+import router from "../Router";
 
 export default (app: Application): void => {
-  app.use("/api", API_ROUTER);
+  app.use("/api/posts", router);
 };
