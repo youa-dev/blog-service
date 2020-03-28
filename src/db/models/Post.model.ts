@@ -35,7 +35,11 @@ const schema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  views: {
+    type: Number,
+    default: 0
   }
 });
 
-export default generator("user", schema);
+export default generator("post", schema);

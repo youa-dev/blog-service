@@ -5,7 +5,7 @@ dotenv.config();
 
 const { server, db } = {
   server: {
-    port: parseInt(process.env.PORT) || 5000,
+    port: parseInt(process.env.PORT) || 5001,
     env: process.env.NODE_ENV || "development",
     secret: process.env.SECRET
   },

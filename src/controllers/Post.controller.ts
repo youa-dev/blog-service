@@ -1,17 +1,13 @@
 import { IRequest } from "../interfaces";
 import { Response } from "express";
 import Post from "../db/models/Post.model";
-
-const randomHandleNumber = () =>
-  `${Math.floor(Math.random() * 10)}${Math.floor(
-    Math.random() * 10
-  )}${Math.floor(Math.random() * 10)}`;
+import crypto from "crypto";
 
 const generateHandle = (title: string) =>
   `${title
     .toLowerCase()
     .split(" ")
-    .join("-")}-${randomHandleNumber()}`;
+    .join("-")}-${crypto.randomBytes(4).toString("hex")}`;
 
 class PostController {
   public async createPost(req: IRequest, res: Response) {

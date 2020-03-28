@@ -10,12 +10,7 @@ class Router {
     this.setEndpoints();
   }
   private setEndpoints(): void {
-    this.ROUTER.post(
-      "/create",
-      authUser,
-      validateInput,
-      (req: IRequest, res: express.Response) => controller.createPost
-    );
+    this.ROUTER.post("/create", authUser, validateInput, controller.createPost);
     // this.ROUTER.put(
     //   "/edit",
     //   validateInput,

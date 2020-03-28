@@ -28,6 +28,7 @@ export interface IPost extends Document {
   likes: string[];
   comments: IComment[];
   createdAt: Date;
+  views: number;
 }
 
 export interface IPostValidationErrors {
