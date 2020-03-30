@@ -26,6 +26,7 @@ export interface IUser extends Document {
 
 export interface IRequest extends Request {
   user?: IUser;
+  post?: IPost;
 }
 
 export interface IComment {

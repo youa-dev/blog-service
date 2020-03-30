@@ -20,25 +20,19 @@ const schema = new Schema({
     required: true
   },
   likes: [{ type: Schema.Types.ObjectId }],
+  views: {
+    type: Number,
+    default: 0
+  },
   comments: [
     {
-      user: {
-        type: Schema.Types.ObjectId,
-        required: true
-      },
-      body: {
-        type: String,
-        required: true
-      }
+      type: Schema.Types.ObjectId,
+      ref: "comment"
     }
   ],
   createdAt: {
     type: Date,
     default: Date.now
-  },
-  views: {
-    type: Number,
-    default: 0
   }
 });
 
