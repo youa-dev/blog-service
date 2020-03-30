@@ -11,11 +11,9 @@ class Router {
   }
   private setEndpoints(): void {
     this.ROUTER.post("/create", authUser, validateInput, controller.createPost);
-    // this.ROUTER.put(
-    //   "/edit",
-    //   validateInput,
-    //   (req: IRequest, res: express.Response) => controller.editPost
-    // );
+    this.ROUTER.get("/get/:handle", controller.getPost);
+    this.ROUTER.put("/edit", authUser, validateInput, controller.editPost);
+    this.ROUTER.delete("/delete", authUser, controller.deletePost);
   }
 }
 

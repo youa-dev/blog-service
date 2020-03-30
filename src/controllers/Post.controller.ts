@@ -20,10 +20,10 @@ class PostController {
     return res.status(200).json(newPost);
   }
   public async getPost(req: Request, res: Response) {
-    const post = await Post.findOne({ handle: req.params.handle });
-    return res
-      .status(post ? 200 : 404)
-      .json(post ? post : { error: "Post not found." });
+    const post: IPost = await Post.findOne({ handle: req.params.handle });
+    if (!post) return res.status(404).json({ error: "Post not found." });
+    post.views++;
+    await post.save().then(updated => res.status(200).json(updated));
   }
   public async editPost(req: IRequest, res: Response) {
     const post: IPost = await Post.findOne({
