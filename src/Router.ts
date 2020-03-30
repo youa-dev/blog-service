@@ -1,6 +1,7 @@
 import express from "express";
 import validateInput from "./middleware/validateInput";
 import authUser from "./middleware/authUser";
+import findPost from "./middleware/findPost";
 import controller from "./controllers/Post.controller";
 import { IRequest } from "./interfaces";
 
@@ -14,6 +15,13 @@ class Router {
     this.ROUTER.get("/get/:handle", controller.getPost);
     this.ROUTER.put("/edit", authUser, validateInput, controller.editPost);
     this.ROUTER.delete("/delete", authUser, controller.deletePost);
+    this.ROUTER.patch("/like", authUser, findPost, controller.likePost);
+    this.ROUTER.post(
+      "/comment/new",
+      authUser,
+      findPost,
+      controller.commentPost
+    );
   }
 }
 
