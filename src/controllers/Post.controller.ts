@@ -30,7 +30,7 @@ class PostController {
     post.save().then(updated => res.status(200).json(updated));
   }
   public async editPost(req: IRequest, res: Response) {
-    if (req.post.author !== req.user.id)
+    if (req.user.id != req.post.author)
       return res
         .status(403)
         .json({ error: "You are no the author of this post." });
@@ -40,7 +40,7 @@ class PostController {
     req.post.save().then(updated => res.status(200).json(updated));
   }
   public async deletePost(req: IRequest, res: Response) {
-    if (req.post.author !== req.user.id)
+    if (req.user.id != req.post.author)
       return res
         .status(403)
         .json({ error: "You are no the author of this post." });
