@@ -8,6 +8,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
   jwt.verify(
     token.replace("Bearer ", ""),
     server.secret,
+    { issuer: server.issuer },
     (err, decoded: IUser) => {
       if (err) return res.status(401).send("Unauthorized");
       if (!decoded.profile)

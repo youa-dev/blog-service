@@ -8,6 +8,7 @@ const { server, db } = {
     port: parseInt(process.env.PORT) || 5001,
     env: process.env.NODE_ENV || "development",
     secret: process.env.SECRET,
+    issuer: process.env.TOKEN_ISSUER,
     services: {
       auth: {
         url: process.env.AUTH_SERVICE_URL
