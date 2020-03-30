@@ -2,7 +2,6 @@ import { IRequest, IPost } from "../interfaces";
 import { Request, Response } from "express";
 import Post from "../db/models/Post.model";
 import crypto from "crypto";
-import CustomException from "../helpers/CustomException";
 
 const generateHandle = (title: string) =>
   `${title
