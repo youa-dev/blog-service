@@ -30,27 +30,25 @@ class PostController {
     post.save().then(updated => res.status(200).json(updated));
   }
   public async editPost(req: IRequest, res: Response) {
-    const post: IPost = await Post.findOne({
-      author: req.user.id,
-      _id: req.body.postID
-    });
-    if (!post) return res.status(404).json({ error: "Post not found." });
-    post.title = req.body.title;
-    post.handle = generateHandle(req.body.title);
-    post.body = req.body.body;
-    post.save().then(updated => res.status(200).json(updated));
+    if (req.post.author !== req.user.id)
+      return res
+        .status(403)
+        .json({ error: "You are no the author of this post." });
+    req.post.title = req.body.title;
+    req.post.handle = generateHandle(req.body.title);
+    req.post.body = req.body.body;
+    req.post.save().then(updated => res.status(200).json(updated));
   }
   public async deletePost(req: IRequest, res: Response) {
-    const post: IPost = await Post.findOne({
-      author: req.user.id,
-      _id: req.body.postID
-    });
-    if (!post) return res.status(404).json({ error: "Post not found." });
-    await post.remove();
+    if (req.post.author !== req.user.id)
+      return res
+        .status(403)
+        .json({ error: "You are no the author of this post." });
+    await req.post.remove();
     return res.status(200).json({ deleted: true, timestamp: Date.now() });
   }
   /**
-   * TODO:
+   * TODO
    * Add methods for:
    * - Editing comments
    * - Deleting comments
