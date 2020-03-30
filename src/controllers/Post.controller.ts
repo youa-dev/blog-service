@@ -1,7 +1,8 @@
-import { IRequest } from "../interfaces";
-import { Response } from "express";
+import { IRequest, IPost } from "../interfaces";
+import { Request, Response } from "express";
 import Post from "../db/models/Post.model";
 import crypto from "crypto";
+import CustomException from "../helpers/CustomException";
 
 const generateHandle = (title: string) =>
   `${title
@@ -18,6 +19,32 @@ class PostController {
       body: req.body.body
     });
     return res.status(200).json(newPost);
+  }
+  public async getPost(req: Request, res: Response) {
+    const post = await Post.findOne({ handle: req.params.handle });
+    return res
+      .status(post ? 200 : 404)
+      .json(post ? post : { error: "Post not found." });
+  }
+  public async editPost(req: IRequest, res: Response) {
+    const post: IPost = await Post.findOne({
+      author: req.user.id,
+      _id: req.body.postID
+    });
+    if (!post) return res.status(404).json({ error: "Post not found." });
+    post.title = req.body.title;
+    post.handle = generateHandle(req.body.title);
+    post.body = req.body.body;
+    await post.save().then(updated => res.status(200).json(updated));
+  }
+  public async deletePost(req: IRequest, res: Response) {
+    const post: IPost = await Post.findOne({
+      author: req.user.id,
+      _id: req.body.postID
+    });
+    if (!post) return res.status(404).json({ error: "Post not found." });
+    await post.remove();
+    return res.status(200).json({ deleted: true, timestamp: Date.now() });
   }
 }
 

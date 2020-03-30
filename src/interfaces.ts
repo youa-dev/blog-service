@@ -20,15 +20,15 @@ export interface IComment {
 }
 
 export interface IPost extends Document {
-  id: string;
-  author: string;
-  title: string;
-  handle: string;
-  body: string;
-  likes: string[];
-  comments: IComment[];
-  createdAt: Date;
-  views: number;
+  id?: string;
+  author?: string;
+  title?: string;
+  handle?: string;
+  body?: string;
+  likes?: string[];
+  comments?: IComment[];
+  createdAt?: Date;
+  views?: number;
 }
 
 export interface IPostValidationErrors {

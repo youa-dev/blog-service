@@ -7,7 +7,12 @@ const { server, db } = {
   server: {
     port: parseInt(process.env.PORT) || 5001,
     env: process.env.NODE_ENV || "development",
-    secret: process.env.SECRET
+    secret: process.env.SECRET,
+    services: {
+      auth: {
+        url: process.env.AUTH_SERVICE_URL
+      }
+    }
   },
   db: {
     connection: process.env.DB_CONNECTION,
