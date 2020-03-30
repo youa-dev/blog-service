@@ -1,5 +1,6 @@
 import express from "express";
 import validateInput from "./middleware/validateInput";
+import sanitizeInput from "./middleware/sanitizeInput";
 import authUser from "./middleware/authUser";
 import findPost from "./middleware/findPost";
 import controller from "./controllers/Post.controller";
@@ -10,7 +11,13 @@ class Router {
     this.setEndpoints();
   }
   private setEndpoints(): void {
-    this.ROUTER.post("/create", authUser, validateInput, controller.createPost);
+    this.ROUTER.post(
+      "/create",
+      authUser,
+      sanitizeInput,
+      validateInput,
+      controller.createPost
+    );
     this.ROUTER.get("/get/:handle", controller.getPost);
     this.ROUTER.put(
       "/edit",
