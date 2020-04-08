@@ -19,13 +19,31 @@ class Router {
       validateInput,
       controller.editPost
     );
-    this.ROUTER.delete("/delete", authUser, findPost, controller.deletePost);
-    this.ROUTER.patch("/like", authUser, findPost, controller.likePost);
+    this.ROUTER.delete(
+      "/:postID/delete",
+      authUser,
+      findPost,
+      controller.deletePost
+    );
+    this.ROUTER.patch("/:postID/like", authUser, findPost, controller.likePost);
     this.ROUTER.post(
-      "/comment/new",
+      "/:postID/comment/new",
       authUser,
       findPost,
       controller.commentPost
+    );
+    this.ROUTER.delete(
+      "/:postID/comment/edit/:commentID",
+      authUser,
+      findPost,
+      controller.editComment
+    );
+    this.ROUTER.patch(
+      "/:postID/comment/delete/:commentID",
+      authUser,
+      authUser,
+      findPost,
+      controller.deleteComment
     );
   }
 }
