@@ -29,9 +29,9 @@ export interface IRequest extends Request {
   post?: IPost;
 }
 
-export interface IComment {
-  user: string;
-  body: string;
+export interface IComment extends Document {
+  user?: string;
+  body?: string;
 }
 
 export interface IPost extends Document {
