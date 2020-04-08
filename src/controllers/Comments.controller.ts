@@ -32,6 +32,7 @@ class PostController {
   }
   public async deleteComment(req: IRequest, res: Response) {
     const comment: IComment = await Comment.findById(req.params.commentID);
+    if (!comment) return res.status(404).json({ error: "Comment not found." });
     if (req.user.id != comment.user)
       return res
         .status(403)

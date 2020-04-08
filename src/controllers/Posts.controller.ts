@@ -45,11 +45,12 @@ class PostController {
     return res.status(200).json({ deleted: true, timestamp: Date.now() });
   }
   public async likePost(req: IRequest, res: Response) {
+    if (req.user.id == req.post.author)
+      return res.status(403).json({ error: "You cannot like your own post." });
     // Iterate over likes, then handle the request
-    const { likes } = req.post;
-    req.post.likes = likes.includes(req.user.id)
-      ? likes.filter((v) => v !== req.user.id)
-      : [...likes, req.user.id];
+    req.post.likes = req.post.likes.includes(req.user.id)
+      ? req.post.likes.filter((l) => l != req.user.id)
+      : [...req.post.likes, req.user.id];
     req.post.save().then((updated) => res.status(200).json(updated));
   }
 }
