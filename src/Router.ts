@@ -2,56 +2,60 @@ import express from "express";
 import validateInput from "./middleware/validateInput";
 import authUser from "./middleware/authUser";
 import findPost from "./middleware/findPost";
-import controller from "./controllers/Post.controller";
+import postsController from "./controllers/Posts.controller";
+import commentsController from "./controllers/Comments.controller";
 
 class Router {
   public POST_ROUTES = express.Router();
   public COMMENT_ROUTES = express.Router();
   constructor() {
-    this.setEndpoints();
+    this.setPostsEndpoints();
+    this.setCommentEndpoints();
   }
-  private setEndpoints(): void {
+  private setPostsEndpoints(): void {
     this.POST_ROUTES.post(
       "/create",
       authUser,
       validateInput,
-      controller.createPost
+      postsController.createPost
     );
-    this.POST_ROUTES.get("/get/:handle", controller.getPost);
+    this.POST_ROUTES.get("/get/:handle", postsController.getPost);
     this.POST_ROUTES.put(
       "/:postID/edit",
       authUser,
       findPost,
       validateInput,
-      controller.editPost
+      postsController.editPost
     );
     this.POST_ROUTES.delete(
       "/:postID/delete",
       authUser,
       findPost,
-      controller.deletePost
+      postsController.deletePost
     );
     this.POST_ROUTES.patch(
       "/:postID/like",
       authUser,
       findPost,
-      controller.likePost
+      postsController.likePost
     );
+  }
+  private setCommentEndpoints(): void {
     this.COMMENT_ROUTES.post(
       "/comment/new/:postID",
       authUser,
       findPost,
-      controller.commentPost
+      commentsController.createComment
     );
     this.COMMENT_ROUTES.put(
       "/comment/edit/:commentID",
       authUser,
-      controller.editComment
+      commentsController.editComment
     );
     this.COMMENT_ROUTES.delete(
       "/comment/delete/:commentID",
       authUser,
-      controller.deleteComment
+      commentsController.deleteComment
     );
   }
 }
