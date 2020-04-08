@@ -46,12 +46,6 @@ class PostController {
     await req.post.remove();
     return res.status(200).json({ deleted: true, timestamp: Date.now() });
   }
-  /**
-   * TODO
-   * Add methods for:
-   * - Editing comments
-   * - Deleting comments
-   */
   public async commentPost(req: IRequest, res: Response) {
     // Basic input validation
     if (isEmpty(req.body.body))

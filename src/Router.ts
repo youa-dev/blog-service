@@ -5,47 +5,57 @@ import findPost from "./middleware/findPost";
 import controller from "./controllers/Post.controller";
 
 class Router {
-  public ROUTER = express.Router();
+  public POST_ROUTES = express.Router();
+  public COMMENT_ROUTES = express.Router();
   constructor() {
     this.setEndpoints();
   }
   private setEndpoints(): void {
-    this.ROUTER.post("/create", authUser, validateInput, controller.createPost);
-    this.ROUTER.get("/get/:handle", controller.getPost);
-    this.ROUTER.put(
+    this.POST_ROUTES.post(
+      "/create",
+      authUser,
+      validateInput,
+      controller.createPost
+    );
+    this.POST_ROUTES.get("/get/:handle", controller.getPost);
+    this.POST_ROUTES.put(
       "/:postID/edit",
       authUser,
       findPost,
       validateInput,
       controller.editPost
     );
-    this.ROUTER.delete(
+    this.POST_ROUTES.delete(
       "/:postID/delete",
       authUser,
       findPost,
       controller.deletePost
     );
-    this.ROUTER.patch("/:postID/like", authUser, findPost, controller.likePost);
-    this.ROUTER.post(
-      "/:postID/comment/new",
+    this.POST_ROUTES.patch(
+      "/:postID/like",
+      authUser,
+      findPost,
+      controller.likePost
+    );
+    this.COMMENT_ROUTES.post(
+      "/comment/new/:postID",
       authUser,
       findPost,
       controller.commentPost
     );
-    this.ROUTER.put(
-      "/:postID/comment/edit/:commentID",
+    this.COMMENT_ROUTES.put(
+      "/comment/edit/:commentID",
       authUser,
-      findPost,
       controller.editComment
     );
-    this.ROUTER.patch(
-      "/:postID/comment/delete/:commentID",
+    this.COMMENT_ROUTES.delete(
+      "/comment/delete/:commentID",
       authUser,
-      authUser,
-      findPost,
       controller.deleteComment
     );
   }
 }
 
-export default new Router().ROUTER;
+const { POST_ROUTES, COMMENT_ROUTES } = new Router();
+
+export default { POST_ROUTES, COMMENT_ROUTES };
