@@ -67,6 +67,10 @@ class PostController {
     // Find comment
     const comment: IComment = await Comment.findById(req.params.commentID);
     if (!comment) return res.status(404).json({ error: "Comment not found." });
+    if (req.user.id != comment.user)
+      return res
+        .status(403)
+        .json({ error: "You are no the author of this comment." });
     // Basic input validation
     if (isEmpty(req.body.body))
       return res.status(400).json({ error: "A comment should not be empty." });

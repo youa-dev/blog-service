@@ -13,7 +13,7 @@ class Router {
     this.ROUTER.post("/create", authUser, validateInput, controller.createPost);
     this.ROUTER.get("/get/:handle", controller.getPost);
     this.ROUTER.put(
-      "/edit",
+      "/:postID/edit",
       authUser,
       findPost,
       validateInput,
@@ -32,7 +32,7 @@ class Router {
       findPost,
       controller.commentPost
     );
-    this.ROUTER.delete(
+    this.ROUTER.put(
       "/:postID/comment/edit/:commentID",
       authUser,
       findPost,
