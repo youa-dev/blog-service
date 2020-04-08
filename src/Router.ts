@@ -42,18 +42,18 @@ class Router {
   }
   private setCommentEndpoints(): void {
     this.COMMENT_ROUTES.post(
-      "/comment/new/:postID",
+      "/new/:postID",
       authUser,
       findPost,
       commentsController.createComment
     );
     this.COMMENT_ROUTES.put(
-      "/comment/edit/:commentID",
+      "/edit/:commentID",
       authUser,
       commentsController.editComment
     );
     this.COMMENT_ROUTES.delete(
-      "/comment/delete/:commentID",
+      "/delete/:commentID",
       authUser,
       commentsController.deleteComment
     );
