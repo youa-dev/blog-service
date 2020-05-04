@@ -53,6 +53,10 @@ class PostController {
       : [...req.post.likes, req.user.id];
     req.post.save().then((updated) => res.status(200).json(updated));
   }
+  public async getAllPosts(req: IRequest, res: Response) {
+    const posts = await Post.find({ author: req.user.id });
+    return res.status(200).json(posts);
+  }
 }
 
 export default new PostController();

@@ -39,6 +39,7 @@ class Router {
       findPost,
       postsController.likePost
     );
+    this.POST_ROUTES.get("/all", authUser, postsController.getAllPosts);
   }
   private setCommentEndpoints(): void {
     this.COMMENT_ROUTES.post(
