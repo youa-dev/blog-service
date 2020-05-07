@@ -44,7 +44,7 @@ class PostController {
     await req.post.remove();
     return res.status(200).json({ deleted: true, timestamp: Date.now() });
   }
-  public async likePost(req: IRequest, res: Response) {
+  public likePost(req: IRequest, res: Response) {
     if (req.user.id == req.post.author)
       return res.status(403).json({ error: "You cannot like your own post." });
     // Iterate over likes, then handle the request
@@ -54,7 +54,7 @@ class PostController {
     req.post.save().then((updated) => res.status(200).json(updated));
   }
   public async getAllPosts(req: IRequest, res: Response) {
-    const posts = await Post.find({ author: req.user.id });
+    const posts = await Post.find({ author: req.params.userID });
     return res.status(200).json(posts);
   }
 }
