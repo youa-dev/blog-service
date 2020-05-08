@@ -2,6 +2,8 @@ import { IRequest, IPost } from "../interfaces";
 import { Request, Response } from "express";
 import Post from "../db/models/Post.model";
 import crypto from "crypto";
+import { Converter } from "showdown";
+import sanitize from "sanitize-html";
 
 const generateHandle = (title: string) =>
   `${title.toLowerCase().split(" ").join("-")}-${crypto
@@ -19,12 +21,17 @@ class PostController {
     return res.status(200).json(newPost);
   }
   public async getPost(req: Request, res: Response) {
+    const converter: Converter = new Converter();
+    converter.setFlavor("github");
     const post: IPost = await Post.findOne({
       handle: req.params.handle,
     }).populate("comments");
     if (!post) return res.status(404).json({ error: "Post not found." });
     post.views++;
-    post.save().then((updated) => res.status(200).json(updated));
+    let updated = await post.save();
+    const html = converter.makeHtml(updated.body);
+    updated.body = sanitize(html);
+    return res.status(200).json(updated);
   }
   public async editPost(req: IRequest, res: Response) {
     if (req.user.id != req.post.author)
