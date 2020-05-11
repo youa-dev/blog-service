@@ -22,6 +22,10 @@ const schema = new Schema({
     type: String,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export default generator("comment", schema);
