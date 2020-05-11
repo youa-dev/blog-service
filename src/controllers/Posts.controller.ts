@@ -22,7 +22,7 @@ const generateHandle = (title: string) =>
 class PostController {
   public async createPost(req: IRequest, res: Response) {
     const newPost = await Post.create({
-      author: req.user.id,
+      author: req.user.profile.handle,
       title: req.body.title,
       handle: generateHandle(req.body.title),
       body: req.body.body,

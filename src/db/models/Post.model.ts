@@ -3,7 +3,7 @@ import generator from "./model.generator";
 
 const schema = new Schema({
   author: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   title: {
