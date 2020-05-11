@@ -67,7 +67,9 @@ class PostController {
     req.post.save().then((updated) => res.status(200).json(updated));
   }
   public async getAllPosts(req: IRequest, res: Response) {
-    const posts = await Post.find({ author: req.params.userID });
+    const posts = await Post.find({ author: req.params.userID }).sort({
+      createdAt: -1,
+    });
     return res.status(200).json(posts);
   }
 }
