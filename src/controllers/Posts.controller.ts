@@ -2,8 +2,17 @@ import { IRequest, IPost } from "../interfaces";
 import { Request, Response } from "express";
 import Post from "../db/models/Post.model";
 import crypto from "crypto";
-import { Converter } from "showdown";
-import sanitize from "sanitize-html";
+import { JSDOM, DOMWindow } from "jsdom";
+import createDOMPurify from "dompurify";
+import marked from "marked";
+
+const createDOM = (w: Window | DOMWindow | any) => createDOMPurify(w);
+
+const dompurify = createDOM(new JSDOM("").window);
+
+dompurify.setConfig({
+  ADD_TAGS: ["table, td, tr", "th", "dt", "dd", "sup"],
+});
 
 const generateHandle = (title: string) =>
   `${title.toLowerCase().split(" ").join("-")}-${crypto
@@ -21,16 +30,13 @@ class PostController {
     return res.status(200).json(newPost);
   }
   public async getPost(req: Request, res: Response) {
-    const converter: Converter = new Converter();
-    converter.setFlavor("github");
     const post: IPost = await Post.findOne({
       handle: req.params.handle,
     }).populate("comments");
     if (!post) return res.status(404).json({ error: "Post not found." });
     post.views++;
-    let updated = await post.save();
-    const html = converter.makeHtml(updated.body);
-    updated.body = sanitize(html);
+    const updated = await post.save();
+    updated.body = dompurify.sanitize(marked(updated.body));
     return res.status(200).json(updated);
   }
   public async editPost(req: IRequest, res: Response) {
