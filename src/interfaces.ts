@@ -31,6 +31,9 @@ export interface IRequest extends Request {
 
 export interface IComment extends Document {
   user?: string;
+  author?: string;
+  handle?: string;
+  avatar?: string;
   body?: string;
 }
 

@@ -8,8 +8,11 @@ class PostController {
     // Basic input validation
     if (isEmpty(req.body.body))
       return res.status(400).json({ error: "A comment should not be empty." });
-    const comment = await Comment.create({
+    const comment: IComment = await Comment.create({
       user: req.user.id,
+      author: `${req.user.firstName} ${req.user.lastName}`,
+      handle: req.user.profile.handle,
+      avatar: req.user.profile.profilePicture,
       body: req.body.body,
     });
     req.post.comments.push(comment.id);
