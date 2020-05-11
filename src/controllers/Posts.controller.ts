@@ -58,8 +58,6 @@ class PostController {
     return res.status(200).json({ deleted: true, timestamp: Date.now() });
   }
   public likePost(req: IRequest, res: Response) {
-    if (req.user.id == req.post.author)
-      return res.status(403).json({ error: "You cannot like your own post." });
     // Iterate over likes, then handle the request
     req.post.likes = req.post.likes.includes(req.user.id)
       ? req.post.likes.filter((l) => l != req.user.id)
